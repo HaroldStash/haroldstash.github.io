@@ -1,0 +1,33 @@
+<p id="counter1">Only <span class="days"></span> days left</p>
+
+<script>
+    function getTimeRemaining(endtime) {
+        const now = new Date().getTime();
+        const t = endtime - now;
+        const days = Math.floor(t / (1000 * 60 * 60 * 24));
+        return {
+            'total': t,
+            'days': days,
+        };
+    }
+
+    function initializeClock(element, endtime) {
+        const clock = document.querySelector(element);
+        const daysSpan = clock.querySelector('.days');
+
+        function updateClock() {
+            const t = getTimeRemaining(endtime);
+            daysSpan.innerHTML = t.days;
+            if (t.total <= 0) {
+                clearInterval(timeinterval);
+            }
+        }
+        updateClock();
+        const timeinterval = setInterval(updateClock, 1000);
+    }
+    
+    /* Declare deadline time */
+    const deadline = new Date("2019-01-31").getTime()
+    /* Trigger counter function by targeting specific element and passing the above deadline */
+    initializeClock('#counter1', deadline);
+</script>
